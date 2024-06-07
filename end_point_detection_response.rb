@@ -1,5 +1,7 @@
 require 'etc'
 require 'json'
+require 'securerandom'
+require 'fileutils'
 
 class EndPointDetectionResponse
   LOG_FILE = "activity_log.json".freeze
@@ -14,6 +16,23 @@ class EndPointDetectionResponse
       process_name: process_name(process_id),
       process_command_line: command_line,
       process_id: process_id
+    }
+
+    log_activity(activity)
+  end
+
+  def create_file(file_path, file_type)
+    FileUtils.mkdir_p(file_path) unless File.directory?(file_path)
+
+    random_file_name = "random_#{SecureRandom.uuid}" + ".#{file_type}"
+    full_file_path = File.join(file_path, random_file_name)
+
+    # File.new(full_file_path, 'w')
+    File.write(full_file_path, 'with content')
+
+    activity = {
+      full_path: full_file_path,
+      activity_descriptor: "create"
     }
 
     log_activity(activity)
