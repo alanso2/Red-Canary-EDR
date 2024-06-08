@@ -17,4 +17,4 @@ jobs:
           bundle install
 
       - name: Run tests
-        run: end_point_detection_response_test.rb
+        run: bundle exec rake test
