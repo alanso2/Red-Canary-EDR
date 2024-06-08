@@ -28,6 +28,7 @@ class EndPointDetectionResponseTest < Minitest::Test
   def test_delete_file
     # Test: Delete the file
     created_file = "../test_text_files/test_file.txt"
+    File.write(created_file, 'w')
     @endpoint_detection.delete_file(created_file)
 
     assert_equal(File.exist?(created_file), false)
