@@ -2,10 +2,13 @@ require 'etc'
 require 'json'
 require 'securerandom'
 require 'fileutils'
+require 'socket'
 
 class EndPointDetectionResponse
   LOG_FILE = "activity_log.json".freeze
 
+  #TODO: Support for more than one operating system
+  #Detect OS and have a helper method that handles how to handle command line and args
   def start_process(path, args = nil)
     command_line = "open -na '#{path}'"
     command_line += " --args #{args}" if !args.nil?
@@ -36,6 +39,7 @@ class EndPointDetectionResponse
     }
 
     log_activity(activity)
+    full_file_path
   end
 
   def modify_file(file_path, content)
@@ -55,6 +59,24 @@ class EndPointDetectionResponse
     activity = {
       full_path: file_path,
       activity_descriptor: "delete"
+    }
+
+    log_activity(activity)
+  end
+
+  def network_transmit_data(destination, port, data)
+    socket = UDPSocket.new
+    socket.connect(destination, port)
+    socket.write(data)
+    destination = "#{destination}:#{port}"
+    source = "#{socket.local_address.ip_address}:#{socket.local_address.ip_port}"
+    socket.close
+
+    activity = {
+      source_address_port: source,
+      destination_address_port: destination,
+      data_size: data.bytesize,
+      protocol: 'UDP'
     }
 
     log_activity(activity)
