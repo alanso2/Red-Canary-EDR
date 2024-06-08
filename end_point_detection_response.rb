@@ -38,6 +38,29 @@ class EndPointDetectionResponse
     log_activity(activity)
   end
 
+  def modify_file(file_path, content)
+    File.write(file_path, content)
+
+    activity = {
+      full_path: file_path,
+      activity_descriptor: "modification"
+    }
+
+    log_activity(activity)
+  end
+
+  def delete_file(file_path)
+    File.delete(file_path)
+
+    activity = {
+      full_path: file_path,
+      activity_descriptor: "delete"
+    }
+
+    log_activity(activity)
+  end
+
+
   private
 
   def process_name(pid)
