@@ -1,4 +1,4 @@
-require_relative 'end_point_detection_response'
+require_relative '../lib/end_point_detection_response'
 
 # Start of script
 # Initialization of framework

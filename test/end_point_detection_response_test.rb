@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative 'end_point_detection_response'
+require_relative '../lib/end_point_detection_response'
 
 class EndPointDetectionResponseTest < Minitest::Test
   def setup
@@ -8,7 +8,7 @@ class EndPointDetectionResponseTest < Minitest::Test
 
   def test_create_file
     # Test: Create a file
-    create_path = "test_text_files"
+    create_path = "../test_text_files"
     created_file = @endpoint_detection.create_file(create_path, "txt")
 
     assert(File.exist?(created_file), "File was not created")
@@ -17,7 +17,7 @@ class EndPointDetectionResponseTest < Minitest::Test
   def test_modify_file
     # Test: Modify the file
     edit_content = "Hello, this is now modified v2."
-    created_file = "test_text_files/test_file.txt"
+    created_file = "../test_text_files/test_file.txt"
     File.write(created_file, "Initial content")
 
     @endpoint_detection.modify_file(created_file, edit_content)
@@ -27,7 +27,7 @@ class EndPointDetectionResponseTest < Minitest::Test
 
   def test_delete_file
     # Test: Delete the file
-    created_file = "test_text_files/test_file.txt"
+    created_file = "../test_text_files/test_file.txt"
     @endpoint_detection.delete_file(created_file)
 
     assert_equal(File.exist?(created_file), false)
