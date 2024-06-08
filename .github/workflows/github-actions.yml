@@ -2,7 +2,7 @@ name: GitHub Actions
 run-name: ${{ github.actor }} test for Red Canary EDR Framework🚀
 on: [push]
 jobs:
-  Red Canary EDR Framework :
+  Ubuntu-Red-Canary-EDR-Framework :
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
