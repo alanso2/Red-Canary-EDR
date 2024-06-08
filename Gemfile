@@ -1,6 +1,6 @@
 # Gemfile
 
-ruby '3.1'
+ruby '3.1.0'
 
 #gem dependencies
 gem 'etc'
