@@ -1,8 +1,7 @@
-name: GitHub Actions
+name: Ubuntu - Test EDR Framework
 run-name: ${{ github.actor }} test for Red Canary EDR Framework🚀
 on: [push]
 jobs:
-  Ubuntu - Test EDR Framework:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
