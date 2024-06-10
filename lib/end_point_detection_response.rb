@@ -4,24 +4,29 @@ require 'securerandom'
 require 'fileutils'
 require 'socket'
 require 'rbconfig'
+require 'open3'
 
 class EndPointDetectionResponse
   LOG_FILE = "activity_log.json".freeze
 
   #Support for OS & Linux
   def start_process(path, args = nil)
-    current_operating_system = RbConfig::CONFIG["host_os"]
-    command_line = ""
+    # current_operating_system = RbConfig::CONFIG["host_os"]
+    command_line = "#{path}"
+    command_line += " #{args}" if args
 
-    if current_operating_system.include? "darwin"
-      command_line = "open -na '#{path}'"
-      command_line += " --args #{args}" if args
-    elsif current_operating_system.include? "linux"
-      command_line = path
-      command_line += " #{args}" if args
-    end
+    output, status = Open3.capture2e(command_line)
 
-    process_id = spawn(command_line)
+    # if current_operating_system.include? "darwin"
+    #   command_line = "open -na '#{path}'"
+    #   command_line += " --args #{args}" if args
+    # elsif current_operating_system.include? "linux"
+    #   command_line = path
+    #   command_line += " #{args}" if args
+    # end
+
+    # process_id = spawn(command_line)
+    process_id = status.pid
 
     activity = {
       process_name: process_name(process_id),
@@ -30,6 +35,7 @@ class EndPointDetectionResponse
     }
 
     log_activity(activity)
+    output
   end
 
   def create_file(file_path, file_type)

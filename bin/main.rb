@@ -5,8 +5,10 @@ require_relative '../lib/end_point_detection_response'
 endpoint_detection = EndPointDetectionResponse.new
 
 # Starting/executing a process
-application_path = "/Users/alanso/Desktop/Google Chrome.app"
-start_process = endpoint_detection.start_process(application_path, "--incognito 'https://www.yahoo.com'")
+# application_path = "/Users/alanso/Desktop/Google Chrome.app"
+# start_process = endpoint_detection.start_process(application_path, "--incognito 'https://www.yahoo.com'")
+executable_path = "/Users/alanso/Desktop/Projects/Red-Canary-EDR/test/test_script.rb"
+start_process = endpoint_detection.start_process(executable_path, "args1 args2 args3")
 
 #Create file
 create_path = "/Users/alanso/Desktop/Projects/Red-Canary-EDR/test_text_files"

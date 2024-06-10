@@ -15,6 +15,16 @@ class EndPointDetectionResponseTest < Minitest::Test
     FileUtils.rm_rf(@test_dir)
   end
 
+  def test_start_process
+    # Test: Start a process
+    test_script_path = File.expand_path("../test_script.rb", __FILE__)
+    path = "test_script.rb"
+    args = "arg1 arg2 arg3"
+
+    output = @endpoint_detection.start_process(test_script_path, args)
+    assert_equal(output, "Hello this is used to text for executable file\n")
+  end
+
   def test_create_file
     # Test: Create a file
     created_file = @endpoint_detection.create_file(@test_dir, "txt")
