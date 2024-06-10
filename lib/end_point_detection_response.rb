@@ -7,7 +7,7 @@ require 'rbconfig'
 require 'open3'
 
 class EndPointDetectionResponse
-  LOG_FILE = "activity_log.json".freeze
+  LOG_FILE = "../activity_log.json".freeze
 
   #Support for OS & Linux
   def start_process(path, args = nil)
