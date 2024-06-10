@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'minitest/autorun'
 require_relative '../lib/end_point_detection_response'
 require 'fileutils'
