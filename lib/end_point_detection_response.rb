@@ -3,15 +3,23 @@ require 'json'
 require 'securerandom'
 require 'fileutils'
 require 'socket'
+require 'rbconfig'
 
 class EndPointDetectionResponse
   LOG_FILE = "activity_log.json".freeze
 
-  #TODO: Support for more than one operating system
-  #Detect OS and have a helper method that handles how to handle command line and args
+  #Support for OS & Linux
   def start_process(path, args = nil)
-    command_line = "open -na '#{path}'"
-    command_line += " --args #{args}" if !args.nil?
+    current_operating_system = RbConfig::CONFIG["host_os"]
+    command_line = ""
+
+    if current_operating_system.include? "darwin"
+      command_line = "open -na '#{path}'"
+      command_line += " --args #{args}" if args
+    elsif current_operating_system.include? "linux"
+      command_line = path
+      command_line += " #{args}" if args
+    end
 
     process_id = spawn(command_line)
 
