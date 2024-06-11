@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative '../lib/end_point_detection_response'
 
 # Start of script
