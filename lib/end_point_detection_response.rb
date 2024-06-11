@@ -77,7 +77,6 @@ class EndPointDetectionResponse
     log_activity(activity)
   end
 
-
   private
 
   def process_name(pid)
