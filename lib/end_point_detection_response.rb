@@ -25,7 +25,7 @@ class EndPointDetectionResponse
     full_file_path = File.join(file_path, random_file_name)
 
     # File.new(full_file_path, 'w')
-    File.write(full_file_path, 'with content')
+    File.write(full_file_path, "with content")
 
     activity = {
       full_path: full_file_path,
@@ -71,7 +71,7 @@ class EndPointDetectionResponse
       source_address_port: source,
       destination_address_port: destination,
       data_size: data.bytesize,
-      protocol: 'UDP'
+      protocol: "UDP"
     }
 
     log_activity(activity)
@@ -84,7 +84,7 @@ class EndPointDetectionResponse
   end
 
   def log_activity(details = nil)
-    process_command_line = "#{$0} #{ARGV.join(' ')}"
+    process_command_line = "#{$0} #{ARGV.join(" ")}"
     activity = {
       start_time: Time.now.getutc.to_i,
       username: Etc.getlogin,
@@ -99,7 +99,7 @@ class EndPointDetectionResponse
   end
 
   def append_to_log_file(payload)
-    File.open(LOG_FILE, 'a') do |file|
+    File.open(LOG_FILE, "a") do |file|
       file.puts(payload.to_json)
     end
   end
