@@ -11,21 +11,11 @@ class EndPointDetectionResponse
 
   #Support for OS & Linux
   def start_process(path, args = nil)
-    # current_operating_system = RbConfig::CONFIG["host_os"]
     command_line = "#{path}"
     command_line += " #{args}" if args
 
     output, status = Open3.capture2e(command_line)
 
-    # if current_operating_system.include? "darwin"
-    #   command_line = "open -na '#{path}'"
-    #   command_line += " --args #{args}" if args
-    # elsif current_operating_system.include? "linux"
-    #   command_line = path
-    #   command_line += " #{args}" if args
-    # end
-
-    # process_id = spawn(command_line)
     process_id = status.pid
 
     activity = {
@@ -76,6 +66,7 @@ class EndPointDetectionResponse
     }
 
     log_activity(activity)
+    file_path
   end
 
   def network_transmit_data(destination, port, data)
@@ -104,11 +95,12 @@ class EndPointDetectionResponse
   end
 
   def log_activity(details)
+    process_command_line = "#{$0} #{ARGV.join(' ')}"
     activity = {
       start_time: Time.now.getutc.to_i,
       username: Etc.getlogin,
       process_name: process_name(Process.pid),
-      process_command_line: $0,
+      process_command_line: process_command_line,
       process_id: Process.pid
     }.merge!(details)
 
