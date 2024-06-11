@@ -14,9 +14,7 @@ class EndPointDetectionResponse
     command_line = "#{path}"
     command_line += " #{args}" if args
 
-    output, status = Open3.capture2e(command_line)
-
-    process_id = status.pid
+    output = `#{command_line}`
 
     log_activity
     output
@@ -96,7 +94,9 @@ class EndPointDetectionResponse
       process_name: process_name(Process.pid),
       process_command_line: process_command_line,
       process_id: Process.pid
-    }.merge!(details) if details
+    }
+
+    activity.merge!(details) if details
 
     append_to_log_file(activity)
   end
