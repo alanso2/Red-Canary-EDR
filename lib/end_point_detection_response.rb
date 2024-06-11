@@ -18,13 +18,7 @@ class EndPointDetectionResponse
 
     process_id = status.pid
 
-    activity = {
-      process_name: process_name(process_id),
-      process_command_line: command_line,
-      process_id: process_id
-    }
-
-    log_activity(activity)
+    log_activity
     output
   end
 
@@ -94,7 +88,7 @@ class EndPointDetectionResponse
     `ps -p #{pid} -o comm=`.strip
   end
 
-  def log_activity(details)
+  def log_activity(details = nil)
     process_command_line = "#{$0} #{ARGV.join(' ')}"
     activity = {
       start_time: Time.now.getutc.to_i,
@@ -102,7 +96,7 @@ class EndPointDetectionResponse
       process_name: process_name(Process.pid),
       process_command_line: process_command_line,
       process_id: Process.pid
-    }.merge!(details)
+    }.merge!(details) if details
 
     append_to_log_file(activity)
   end
