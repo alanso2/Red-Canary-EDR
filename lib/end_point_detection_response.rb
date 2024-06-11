@@ -3,8 +3,6 @@ require 'json'
 require 'securerandom'
 require 'fileutils'
 require 'socket'
-require 'rbconfig'
-require 'open3'
 
 class EndPointDetectionResponse
   LOG_FILE = "../activity_log.json".freeze
