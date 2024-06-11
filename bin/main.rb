@@ -2,29 +2,35 @@
 
 require_relative '../lib/end_point_detection_response'
 
-# Start of script
-# Initialization of framework
-endpoint_detection = EndPointDetectionResponse.new
+def main
+  endpoint_detection = EndPointDetectionResponse.new
 
-# Starting/executing a process
-# application_path = "/Users/alanso/Desktop/Google Chrome.app"
-# start_process = endpoint_detection.start_process(application_path, "--incognito 'https://www.yahoo.com'")
-executable_path = "/Users/alanso/Desktop/Projects/Red-Canary-EDR/test/test_script.rb"
-start_process = endpoint_detection.start_process(executable_path, "args1 args2 args3")
+  case ARGV[0]
+  when 'start_process'
+    path = ARGV[1]
+    args = ARGV[2..-1]
+    puts endpoint_detection.start_process(path, args)
+  when 'create_file'
+    file_path = ARGV[1]
+    file_type = ARGV[2]
+    puts endpoint_detection.create_file(file_path, file_type)
+  when 'modify_file'
+    file_path = ARGV[1]
+    content = ARGV[2..-1]
+    endpoint_detection.modify_file(file_path, content)
+  when 'delete_file'
+    file_path = ARGV[1]
+    puts endpoint_detection.delete_file(file_path)
+  when 'network_transmit_data'
+    destination = ARGV[1]
+    port = ARGV[2].to_i
+    data = ARGV[3..-1]
+    endpoint_detection.network_transmit_data(destination, port, data)
+  else
+    puts "Unknown command"
+  end
+end
 
-#Create file
-create_path = "/Users/alanso/Desktop/Projects/Red-Canary-EDR/test_text_files"
-create_file = endpoint_detection.create_file(create_path, "txt")
-
-#Modify file
-edit_path = "/Users/alanso/Desktop/Projects/Red-Canary-EDR/test_text_files/random_3a2de320-c39b-49e4-b91d-2934b3227b4c.txt"
-edit_content = "Hello this is now modified again"
-modify_file = endpoint_detection.modify_file(edit_path, edit_content)
-
-#Delete file
-endpoint_detection.delete_file(create_file)
-
-#Data transmission
-url = "https://official-joke-api.appspot.com"
-data = "this is another test data should be different this time"
-network_transmit_data = endpoint_detection.network_transmit_data(url, 443, data)
+if __FILE__ == $PROGRAM_NAME
+  main
+end
