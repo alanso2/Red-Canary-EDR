@@ -8,7 +8,7 @@ def main
   case ARGV[0]
   when "start_process"
     path = ARGV[1]
-    args = ARGV[2..-1].join(' ')
+    args = ARGV[2..-1].join(" ")
     puts endpoint_detection.start_process(path, args)
   when "create_file"
     file_path = ARGV[1]
@@ -16,7 +16,7 @@ def main
     puts endpoint_detection.create_file(file_path, file_type)
   when "modify_file"
     file_path = ARGV[1]
-    content = ARGV[2..-1]
+    content = ARGV[2..-1].join(" ")
     endpoint_detection.modify_file(file_path, content)
   when "delete_file"
     file_path = ARGV[1]
